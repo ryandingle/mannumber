@@ -1,47 +1,64 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+<div class="login-box">
+    <div class="login-logo">
+        <a href="{{ url('/') }}">
+            <img class="img-responsive" src="{{ asset('img/sm_logo.png') }}" width="40%" style="margin: 0px auto">
+            <b>Man</b>Number
+        </a>
+    </div>
 
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    <div class="login-box-body">
+    <p class="login-box-msg">Reset Password</p>
 
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
         </div>
+    @endif
+
+    <form method="POST" action="{{ route('password.email') }}">
+        {{ csrf_field() }}
+
+        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+            <label for="email" control-label">E-Mail Address</label>
+            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+            @if ($errors->has('email'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('email') }}</strong>
+                </span>
+            @endif
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right">
+                Send Password Reset Link
+            </button>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-link" href="{{ route('login') }}">Back to Login</a>
+        </div>
+    </form>
+    <br>
     </div>
 </div>
 @endsection
+
+@push('css')
+<link rel="stylesheet" href="{{ asset('admin/plugins/iCheck/square/blue.css') }}">
+@endpush
+
+@push('scripts')
+<script src="{{ asset('admin/plugins/iCheck/icheck.min.js') }}"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
+@endpush
