@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('employee_no')->unique();
             $table->string('sss_no')->unique();
             $table->string('password');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('status', 255)->nullable();
             $table->rememberToken();
             $table->bigInteger('created_by')->nullable();
