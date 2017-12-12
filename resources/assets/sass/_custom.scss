@@ -1,0 +1,42 @@
+.margin-auto {
+	margin: 0px auto;
+}
+
+.modal {
+  position: relative;
+  top: auto;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  display: block;
+  z-index: 1;
+}
+.modal {
+  background: transparent !important;
+}
+
+[class^='select2'] {
+  border-radius: 0px !important;
+}
+
+span.select2{
+  width: 100% !important;
+}
+
+.datepicker{
+  border-radius: 0px !important;
+}
+
+.select2-container .select2-selection {
+  border: 1px solid #d2d6de !important;
+}
+.select2-selection__rendered {
+    line-height: 31px !important;
+}
+.select2-container .select2-selection--single {
+    height: 34px !important;
+}
+.select2-selection__arrow {
+    height: 34px !important;
+}
+

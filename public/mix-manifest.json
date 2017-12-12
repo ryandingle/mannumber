@@ -1,0 +1,13 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/module/user/user.js": "/js/module/user/user.js",
+    "/js/module/role/role.js": "/js/module/role/role.js",
+    "/js/module/request/request.js": "/js/module/request/request.js",
+    "/js/module/request/employee.js": "/js/module/request/employee.js",
+    "/js/module/permission/permission.js": "/js/module/permission/permission.js",
+    "/js/module/module/module.js": "/js/module/module/module.js",
+    "/js/module/dashboard/dashboard.js": "/js/module/dashboard/dashboard.js",
+    "/js/module/account/account.js": "/js/module/account/account.js",
+    "/js/common.js": "/js/common.js"
+}
