@@ -7,16 +7,22 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Repositories\Account\AccountInterface;
-use Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\Log\LogInterface;
+use App\Repositories\User\UserInterface;
+use Auth;
 
 class AccountController extends Controller
 {
     private $account;
+    private $log;
+    private $user;
 
-    public function __construct(AccountInterface $account)
+    public function __construct(AccountInterface $account, LogInterface $log, UserInterface $user)
     {
-        $this->account = $account;
+        $this->account  = $account;
+        $this->log      = $log;
+        $this->user     = $user;
     }
     /**
      * Display a listing of the resource.
@@ -136,7 +142,23 @@ class AccountController extends Controller
             $this->account->update_profile_picture($id, $public);
         }
 
-        $data  = $this->account->update($id, $request->all());
+        $old_data   = $this->user->show($id);
+        $data       = $this->account->update($id, $request->all());
+        $new_data   = $this->user->show($id);
+
+        /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'user',
+            'table'         => 'users',
+            'object_id'     => $id,
+            'action'        => 'update',
+            'new_data'      => $new_data,
+            'old_data'      => $old_data,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
 
         return response()->json([
             'message'   => 'Successfully Updated', 

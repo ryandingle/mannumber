@@ -21,9 +21,9 @@ class ModuleRepository implements ModuleInterface
     public function list()
     {
         return $this->module
-            ->where('prefix', '!=', 'dashboard')
-            ->where('prefix', '!=', 'account')
-            ->get();
+            //->where('prefix', '!=', 'dashboard')
+            //->where('prefix', '!=', 'account')
+            ->all();
     }
 
     public function get($where, $rows)

@@ -3,9 +3,8 @@
 namespace App\Modules\Request\Models;
 
 use Illuminate\Database\Eloquent\Model;
-//use OwenIt\Auditing\Contracts\Auditable;
 
-class Request extends Model// implements AuditableInterface
+class Request extends Model
 {
-	//use \OwenIt\Auditing\Auditable;
+	//
 }

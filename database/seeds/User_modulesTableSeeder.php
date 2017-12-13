@@ -83,6 +83,16 @@ class User_modulesTableSeeder extends Seeder
         );
 
         DB::table('user_modules')->insert(
+            [
+                'module_id'     => '8',
+                'user_id'       => '1',
+                'status'        => 'active',
+                'created_by'    => '1',
+                'created_at'    => date(now()),
+            ]
+        );
+
+        DB::table('user_modules')->insert(
             /*admin*/
             [
                 'module_id' 	=> '1',
@@ -154,6 +164,16 @@ class User_modulesTableSeeder extends Seeder
         );
 
         DB::table('user_modules')->insert(
+            [
+                'module_id'     => '8',
+                'user_id'       => '2',
+                'status'        => 'active',
+                'created_by'    => '1',
+                'created_at'    => date(now()),
+            ]
+        );
+
+        DB::table('user_modules')->insert(
 
             /*encoder*/
             [
@@ -177,7 +197,7 @@ class User_modulesTableSeeder extends Seeder
 
         DB::table('user_modules')->insert(
             [
-                'module_id' 	=> '7',
+                'module_id' 	=> '8',
                 'user_id' 		=> '3',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',

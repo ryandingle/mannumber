@@ -9,16 +9,19 @@ use App\Http\Controllers\Controller;
 use App\DataTables\Module\ModulesDataTable;
 use App\Repositories\Module\ModuleInterface;
 use App\Repositories\User\UserInterface;
+use App\Repositories\Log\LogInterface;
 
 class ModuleController extends Controller
 {
     private $module;
     private $user;
+    private $log;
 
-    public function __construct(ModuleInterface $module, UserInterface $user)
+    public function __construct(ModuleInterface $module, UserInterface $user, LogInterface $log)
     {
         $this->module   = $module;
         $this->user     = $user;
+        $this->log      = $log;
     }
     /**
      * Display a listing of the resource.
@@ -62,6 +65,20 @@ class ModuleController extends Controller
         ]);
 
         $data  = $this->module->store($request->all());
+
+        /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'module',
+            'table'         => 'modules',
+            'object_id'     => $data->id,
+            'action'        => 'store',
+            'new_data'      => $data,
+            'old_data'      => null,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
 
         return response()->json([
             'message'   => 'Successfully Added', 
@@ -122,9 +139,24 @@ class ModuleController extends Controller
             'icon'          => 'nullable',
             'sort_order'    => 'nullable',
             'status'        => 'required',
-       ]);
+        ]);
 
-       $data = $this->module->update($id, $request->all());
+        $old_data   = $this->module->show($id);
+        $data       = $this->module->update($id, $request->all());
+
+       /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'module',
+            'table'         => 'modules',
+            'object_id'     => $id,
+            'action'        => 'update',
+            'new_data'      => $data,
+            'old_data'      => $old_data,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+            /*END LOG ACTION*/
 
        return response()->json([
             'message'   => 'Successfully Updated', 
@@ -150,6 +182,20 @@ class ModuleController extends Controller
         }
         else
         {
+            /*LOG ACTION*/
+            $log_data = [
+                'module'        => 'module',
+                'table'         => 'modules',
+                'object_id'     => $id,
+                'action'        => 'destroy',
+                'new_data'      => null,
+                'old_data'      => $data,
+                'ip_address'    => $request->ip(),
+                'user_agent'    => $request->server('HTTP_USER_AGENT')
+            ];
+            $this->log->store($log_data);
+            /*END LOG ACTION*/
+
             $delete = $this->module->destroy($id);
 
             if(!$delete)

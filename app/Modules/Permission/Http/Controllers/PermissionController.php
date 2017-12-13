@@ -9,16 +9,19 @@ use App\Http\Controllers\Controller;
 use App\DataTables\Permission\PermissionsDataTable;
 use App\Repositories\Permission\PermissionInterface;
 use App\Repositories\User\UserInterface;
+use App\Repositories\Log\LogInterface;
 
 class PermissionController extends Controller
 {
     private $permission;
     private $user;
+    private $log;
     
-    public function __construct(PermissionInterface $permission, UserInterface $user)
+    public function __construct(PermissionInterface $permission, UserInterface $user, LogInterface $log)
     {
         $this->permission   = $permission;
         $this->user         = $user;
+        $this->log          = $log;
     }
     /**
      * Display a listing of the resource.
@@ -60,6 +63,20 @@ class PermissionController extends Controller
         ]);
 
         $data  = $this->permission->store($request->all());
+
+        /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'permission',
+            'table'         => 'permissions',
+            'object_id'     => $data->id,
+            'action'        => 'store',
+            'new_data'      => $data,
+            'old_data'      => null,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
 
         return response()->json([
             'message'   => 'Successfully Added', 
@@ -117,9 +134,24 @@ class PermissionController extends Controller
             'title'         => 'required',
             'prefix'        => 'required',
             'description'   => 'nullable',
-       ]);
+        ]);
 
-       $data = $this->permission->update($id, $request->all());
+        $old_data   = $this->permission->show($id);
+        $data       = $this->permission->update($id, $request->all());
+
+       /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'permission',
+            'table'         => 'permissions',
+            'object_id'     => $id,
+            'action'        => 'update',
+            'new_data'      => $data,
+            'old_data'      => $old_data,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
 
        return response()->json([
             'message'   => 'Successfully Updated', 
@@ -145,6 +177,20 @@ class PermissionController extends Controller
         }
         else
         {
+            /*LOG ACTION*/
+            $log_data = [
+                'module'        => 'permission',
+                'table'         => 'permissions',
+                'object_id'     => $id,
+                'action'        => 'destroy',
+                'new_data'      => null,
+                'old_data'      => $data,
+                'ip_address'    => $request->ip(),
+                'user_agent'    => $request->server('HTTP_USER_AGENT')
+            ];
+            $this->log->store($log_data);
+            /*END LOG ACTION*/
+
             $delete = $this->permission->destroy($id);
 
             if(!$delete)

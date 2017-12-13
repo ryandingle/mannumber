@@ -183,11 +183,6 @@ return [
         Caffeinated\Modules\ModulesServiceProvider::class,
 
         /*
-         * Laravel auditing
-         */
-        OwenIt\Auditing\AuditingServiceProvider::class,
-
-        /*
          * Laravel yajra Datatable
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
@@ -203,6 +198,8 @@ return [
         App\Providers\Permission\PermissionServiceProvider::class,
         App\Providers\Module\ModuleServiceProvider::class,
         App\Providers\Account\AccountServiceProvider::class,
+        App\Providers\Log\LogServiceProvider::class,
+        App\Providers\Log\LogServiceProvider::class
 
     ],
 

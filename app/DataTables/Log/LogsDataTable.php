@@ -1,11 +1,11 @@
 <?php
 
-namespace App\DataTables\Module;
+namespace App\DataTables\Log;
 
-use App\Modules\Module\Models\Module;
+use App\Modules\Log\Models\Log;
 use Yajra\DataTables\Services\DataTable;
 
-class ModulesDataTable extends DataTable
+class LogsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -17,7 +17,7 @@ class ModulesDataTable extends DataTable
     {
         return datatables($query)
             ->addColumn('action', function($data){
-                return view('module::button.module', ['data' => $data->id]);
+                return view('log::button.log', ['data' => $data->id]);
             });
     }
 
@@ -27,22 +27,19 @@ class ModulesDataTable extends DataTable
      * @param \App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Module $model)
+    public function query(Log $model)
     {
-        return $model->newQuery()
-            //->where('prefix', '!=', 'dashboard')
-            //->where('prefix', '!=', 'account')
-            ->select(
-                'id', 
-                'title',
-                'description',
-                'prefix',
-                'icon',
-                'status' ,
-                'sort_order',
-                'created_at', 
-                'updated_at'
-            );
+        return $model->newQuery()->select(
+            'id', 
+            'user_id',
+            'module',
+            'table',
+            'object_id',
+            'method',
+            'ip_address',
+            'user_agent',
+            'created_at'
+        );
     }
 
     /**
@@ -68,14 +65,14 @@ class ModulesDataTable extends DataTable
     {
         return [
             'id', 
-            'title',
-            'description',
-            'prefix',
-            'icon',
-            'sort_order',
-            'status' ,
-            'created_at', 
-            'updated_at'
+            'user_id',
+            'module',
+            'table',
+            'object_id',
+            'method', 
+            'ip_address',
+            'user_agent',
+            'created_at'
         ];
     }
 
@@ -86,6 +83,6 @@ class ModulesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'modules_' . time();
+        return 'logsdatatable_' . time();
     }
 }

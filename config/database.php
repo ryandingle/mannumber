@@ -2,6 +2,8 @@
 
 return [
 
+    'fetch' => PDO::FETCH_CLASS,
+
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -77,6 +79,15 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
         ],
+
+        'sqlsrv_dev' => [
+           'driver' => 'sqlsrv',
+           'host' => env('DB_HOST', 'DRMYPR01\MYPMDEVDB'), // Provide IP address here
+           'database' => env('DB_DATABASE', 'mannumber'),//payroll_adjustment_dev
+           'username' => env('DB_USERNAME', 'usr_sysdev_acc'),
+           'password' => env('DB_PASSWORD', 'myprimedev'),
+           'prefix' => '',
+        ],     
 
     ],
 

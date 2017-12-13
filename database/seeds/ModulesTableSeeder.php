@@ -78,6 +78,17 @@ class ModulesTableSeeder extends Seeder
         ]);
 
         DB::table('modules')->insert([
+            'title'         => 'Logs',
+            'prefix'        => 'log',
+            'description'   => 'Logs Module',
+            'icon'          => 'fa-history',
+            'sort_order'    => '6',
+            'status'        => 'active',
+            'created_by'    => '1',
+            'created_at'    => date(now()),
+        ]);
+
+        DB::table('modules')->insert([
             'title'         => 'Account',
             'prefix'        => 'account',
             'description'   => 'Account Module',

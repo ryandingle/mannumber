@@ -57,6 +57,7 @@ class AccountRepository implements AccountInterface
         }
 
         $this->account->where('id', $id)->update($user_data);
+        
         return $this->show($id);
     }
 

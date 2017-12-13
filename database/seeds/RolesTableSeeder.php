@@ -28,7 +28,7 @@ class RolesTableSeeder extends Seeder
         ]);
 
         DB::table('roles')->insert([
-            'title'         => 'Admin',
+            'title'         => 'Encoder',
             'prefix'        => 'encoder',
             'description'   => 'Encoder Role',
             'created_by'    => '2',

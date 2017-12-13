@@ -11,6 +11,7 @@ use App\Repositories\Role\RoleInterface;
 use App\Repositories\User\UserInterface;
 use App\Repositories\Module\ModuleInterface;
 use App\Repositories\Permission\PermissionInterface;
+use App\Repositories\Log\LogInterface;
 use Auth;
 
 class UserController extends Controller
@@ -19,13 +20,15 @@ class UserController extends Controller
     private $permission;
     private $module;
     private $user;
+    private $log;
 
-    public function __construct(RoleInterface $role, UserInterface $user, PermissionInterface $permission, ModuleInterface $module)
+    public function __construct(RoleInterface $role, UserInterface $user, PermissionInterface $permission, ModuleInterface $module, LogInterface $log)
     {
         $this->role         = $role;
         $this->user         = $user;
         $this->permission   = $permission;
         $this->module       = $module;
+        $this->log          = $log;
     }
     /**
      * Display a listing of the resource.
@@ -80,6 +83,20 @@ class UserController extends Controller
         ]);
 
         $data  = $this->user->store($request->all());
+
+        /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'user',
+            'table'         => 'users',
+            'object_id'     => $data->id,
+            'action'        => 'store',
+            'new_data'      => $data,
+            'old_data'      => null,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
 
         if($data)
         {
@@ -214,9 +231,24 @@ class UserController extends Controller
             'modules'                   => 'required',
             'permissions'               => 'required',
             'status'                    => 'required',
-       ]);
+        ]);
 
-       $data  = $this->user->update($id, $request->all());
+        $old_data   = $this->user->show($id);
+        $data       = $this->user->update($id, $request->all());
+
+        /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'user',
+            'table'         => 'users',
+            'object_id'     => $id,
+            'action'        => 'update',
+            'new_data'      => $data,
+            'old_data'      => $old_data,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
 
         if($data)
         {
@@ -282,6 +314,20 @@ class UserController extends Controller
         }
         else
         {
+            /*LOG ACTION*/
+            $log_data = [
+                'module'        => 'user',
+                'table'         => 'users',
+                'object_id'     => $id,
+                'action'        => 'destroy',
+                'new_data'      => null,
+                'old_data'      => $data,
+                'ip_address'    => $request->ip(),
+                'user_agent'    => $request->server('HTTP_USER_AGENT')
+            ];
+            $this->log->store($log_data);
+            /*END LOG ACTION*/
+
             $delete = $this->user->destroy($id);
 
             if(!$delete)

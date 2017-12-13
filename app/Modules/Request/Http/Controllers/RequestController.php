@@ -10,18 +10,21 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Request\RequestInterface;
 use App\Repositories\Request\EmployeeInterface;
 use App\Repositories\User\UserInterface;
+use App\Repositories\Log\LogInterface;
 
 class RequestController extends Controller
 {
     private $requestRepository;
     private $employee;
     private $user;
+    private $log;
 
-    public function __construct(RequestInterface $requestRepository, EmployeeInterface $employee, UserInterface $user)
+    public function __construct(RequestInterface $requestRepository, EmployeeInterface $employee, UserInterface $user, LogInterface $log)
     {
         $this->requestRepository = $requestRepository;
         $this->employee          = $employee;
         $this->user              = $user;
+        $this->log               = $log;
     }
     /**
      * Display a listing of the resource.
@@ -64,6 +67,21 @@ class RequestController extends Controller
 
         $data  = $this->requestRepository->store($request->all());
 
+        /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'request',
+            'table'         => 'requests',
+            'object_id'     => $data->id,
+            'action'        => 'store',
+            'new_data'      => $data,
+            'old_data'      => null,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
+
+        /*ADD NEW EMPLOYEE NUMBERS*/
         if($data)
         {
             $request_number = $data['request_number'];
@@ -77,9 +95,24 @@ class RequestController extends Controller
                     'employee_number'   => $this->employee->generateEmployeeNumber()[0]
                 ];
 
-                $this->requestRepository->addEmployees($request_data);
+                $data_emp = $this->requestRepository->addEmployees($request_data);
+
+                /*LOG ACTION*/
+                $log_data = [
+                    'module'        => 'request',
+                    'table'         => 'employees',
+                    'object_id'     => $data_emp->id,
+                    'action'        => 'store',
+                    'new_data'      => $data_emp,
+                    'old_data'      => null,
+                    'ip_address'    => $request->ip(),
+                    'user_agent'    => $request->server('HTTP_USER_AGENT')
+                ];
+                $this->log->store($log_data);
+                /*END LOG ACTION*/
             }
         }
+        /*END ADD NEW EMPLOYEE NUMBERS*/
 
         return response()->json([
             'message'   => 'Successfully Added', 
@@ -133,15 +166,72 @@ class RequestController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request_number     = $request->request_number;
+        $employee_count     = $this->employee->count(['request_id' => $id]);
+
+        if($request_number < $employee_count)
+        {
+            return response()->json(['message' => 'Lower number to its original request value cannot be processed.'], 422);
+        }
+
        $request->validate([
             'request_number'    => 'required|numeric|min:1',
             'company'           => 'required',
             'branch'            => 'required'
        ]);
 
-       $data = $this->requestRepository->update($id, $request->all());
+       $old_data    = $this->requestRepository->show($id);
+       $data        = $this->requestRepository->update($id, $request->all());
 
-       return response()->json([
+       /*LOG ACTION*/
+        $log_data = [
+            'module'        => 'request',
+            'table'         => 'requests',
+            'object_id'     => $id,
+            'action'        => 'update',
+            'new_data'      => $data,
+            'old_data'      => $old_data,
+            'ip_address'    => $request->ip(),
+            'user_agent'    => $request->server('HTTP_USER_AGENT')
+        ];
+        $this->log->store($log_data);
+        /*END LOG ACTION*/
+
+        /*ADD ADDIONAL EMPLOYEE NUMBERS IF REQUEST NUMBER CHANGE TO HIGHER VALUE*/
+        if($request_number > $employee_count)
+        {
+            if($data)
+            {
+                for($a = $employee_count + 1; $a <= $request_number ; $a++)
+                {
+                    $request_data = [
+                        'request_id'        => $data['id'],
+                        'branch'            => $data['branch'],
+                        'company'           => $data['company'],
+                        'employee_number'   => $this->employee->generateEmployeeNumber()[0]
+                    ];
+
+                    $data_emp = $this->requestRepository->addEmployees($request_data);
+
+                    /*LOG ACTION*/
+                    $log_data = [
+                        'module'        => 'request',
+                        'table'         => 'employees',
+                        'object_id'     => $data_emp->id,
+                        'action'        => 'store',
+                        'new_data'      => $data_emp,
+                        'old_data'      => null,
+                        'ip_address'    => $request->ip(),
+                        'user_agent'    => $request->server('HTTP_USER_AGENT')
+                    ];
+                    $this->log->store($log_data);
+                    /*END LOG ACTION*/
+                }
+            }
+        }
+        /*END ADD NEW EMPLOYEE*/
+
+        return response()->json([
             'message'   => 'Successfully Updated', 
             'data'      => $data
         ], 200);
@@ -165,6 +255,20 @@ class RequestController extends Controller
         }
         else
         {
+            /*LOG ACTION*/
+            $log_data = [
+                'module'        => 'request',
+                'table'         => 'requests',
+                'object_id'     => $id,
+                'action'        => 'destroy',
+                'new_data'      => null,
+                'old_data'      => $data,
+                'ip_address'    => $request->ip(),
+                'user_agent'    => $request->server('HTTP_USER_AGENT')
+            ];
+            $this->log->store($log_data);
+            /*END LOG ACTION*/
+
             $delete = $this->requestRepository->destroy($id);
 
             if(!$delete)
