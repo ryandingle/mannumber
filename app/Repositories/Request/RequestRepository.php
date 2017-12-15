@@ -18,7 +18,7 @@ class RequestRepository implements RequestInterface
         $this->employee = $employee;
     }
 
-    public function list()
+    public function all()
     {
         return $this->request->all();
     }
@@ -35,7 +35,7 @@ class RequestRepository implements RequestInterface
             'branch'            => $data['branch'],
             'company'           => $data['company'],
             'status'            => 'active',
-            'created_at'        => date(now()),
+            'created_at'        => date('Y-m-d H:i:s'),
             'created_by'        => Auth::user()->id
         ]);
 
@@ -55,7 +55,7 @@ class RequestRepository implements RequestInterface
             'company'           => $data['company'],
             'status'            => 'active',
             'updated_by'        => Auth::user()->id,
-            'updated_at'        => date(now()),
+            'updated_at'        => date('Y-m-d H:i:s'),
         ]);
 
         return $this->show($id);
@@ -69,7 +69,7 @@ class RequestRepository implements RequestInterface
             'branch'           => ($data['branch'] == '') ? NULL : $data['branch'],
             'company'          => $data['company'],
             'status'           => 'active',
-            'created_at'       => date(now()),
+            'created_at'       => date('Y-m-d H:i:s'),
             'created_by'       => Auth::user()->id
         ]);
 

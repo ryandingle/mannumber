@@ -3,7 +3,7 @@
 namespace App\Repositories\Request;
 
 interface RequestInterface {
-    public function list();
+    public function all();
     public function get($where, $rows);
     public function store($data);
     public function edit($id);

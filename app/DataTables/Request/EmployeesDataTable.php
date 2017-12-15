@@ -65,8 +65,8 @@ class EmployeesDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '8%'])
-                    ->parameters($this->getBuilderParameters());
+                    ->addAction(['width' => '8%']);
+                    //->parameters($this->getBuilderParameters());
     }
 
     /**

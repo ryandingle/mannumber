@@ -19,7 +19,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order' 	=> '0',
             'status' 		=> 'active',
             'created_by' 	=> '1',
-            'created_at' 	=> date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('modules')->insert([
@@ -30,7 +30,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order'    => '1',
             'status'        => 'active',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at'    => date('Y-m-d H:i:s'),
         ]);
 
         DB::table('modules')->insert([
@@ -41,7 +41,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order'    => '2',
             'status'        => 'active',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at'    => date('Y-m-d H:i:s'),
         ]);
 
         DB::table('modules')->insert([
@@ -52,7 +52,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order'    => '3',
             'status'        => 'active',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at'    => date('Y-m-d H:i:s'),
         ]);
 
         DB::table('modules')->insert([
@@ -63,7 +63,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order'    => '4',
             'status'        => 'active',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at'    => date('Y-m-d H:i:s'),
         ]);
 
         DB::table('modules')->insert([
@@ -74,7 +74,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order'    => '5',
             'status'        => 'active',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('modules')->insert([
@@ -85,7 +85,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order'    => '6',
             'status'        => 'active',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('modules')->insert([
@@ -96,7 +96,7 @@ class ModulesTableSeeder extends Seeder
             'sort_order'    => '100',
             'status'        => 'active',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
     }
 }

@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
             'name'          => 'Admin',
             'firstname'     => 'Main',
             'lastname'      => 'Admin',
-            'email'         => 'dmin@gmail.com',
+            'email'         => 'admin@gmail.com',
             'username'      => 'admin',
             'employee_no'   => '000000001',
             'sss_no'        => '000000001',

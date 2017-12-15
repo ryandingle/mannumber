@@ -15,7 +15,7 @@ class RoleController extends Controller
 {
     private $role;
     private $user;
-    public $log;
+    private $log;
     
     public function __construct(RoleInterface $role, UserInterface $user, LogInterface $log)
     {

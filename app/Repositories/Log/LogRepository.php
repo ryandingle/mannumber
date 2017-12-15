@@ -27,8 +27,8 @@ class LogRepository implements LogInterface
             'old_data'      => $data['old_data'],
             'ip_address'    => $data['ip_address'],
             'user_agent'    => $data['user_agent'],
-            'created_at'    => date(now()),
-            'updated_at'    => date(now())
+            'created_at'    => date('Y-m-d H:i:s'),
+            'updated_at'    => date('Y-m-d H:i:s')
         ]);
 
         return $this->show($id);

@@ -18,7 +18,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '1',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -29,7 +29,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '1',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -39,7 +39,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '1',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -49,7 +49,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '1',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -60,7 +60,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '2',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -70,7 +70,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '2',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -80,7 +80,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '2',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -90,7 +90,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '3',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -100,7 +100,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '3',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
 
@@ -110,7 +110,7 @@ class User_permissionsTableSeeder extends Seeder
                 'user_id' 		=> '3',
                 'status' 		=> 'active',
                 'created_by' 	=> '1',
-                'created_at' 	=> date(now()),
+                'created_at' 	=> date('Y-m-d H:i:s'),
             ]
         );
     }

@@ -15,7 +15,7 @@ class EmployeeRepository implements EmployeeInterface
         $this->employee = $employee;
     }
 
-    public function list()
+    public function all()
     {
         return $this->employee->all();
     }
@@ -32,13 +32,13 @@ class EmployeeRepository implements EmployeeInterface
             'employee_number'  => $this->generateEmployeeNumber()[0],
             'branch'           => ($data['branch'] == '') ? NULL : $data['branch'],
             'company'          => $data['company'],
-            'date_hire'        => ($data['date_hired'] == '') ? NULL : date('Y-m-d', strtotime($data['date_hired'])),
+            'date_hire'        => ($data['date_hired'] == '') ? NULL : date('Y-m-d H:i:s', strtotime($data['date_hired'])),
             'full_name'        => ucwords($data['first_name'].'&nbsp;'.$data['middle_name'].'&nbsp;'.$data['last_name']),
             'first_name'       => ucfirst($data['first_name']),
             'middle_name'      => ucfirst($data['middle_name']),
             'last_name'        => ucfirst($data['last_name']),
             'age'              => $data['age'],
-            'birth_date'       => date('Y-m-d', strtotime($data['birth_date'])),
+            'birth_date'       => date('Y-m-d H:i:s', strtotime($data['birth_date'])),
             'gender'           => $data['gender'],
             'marital_status'   => $data['marital_status'],
             'address'          => $data['address'],
@@ -51,13 +51,13 @@ class EmployeeRepository implements EmployeeInterface
             'hdmf_number'      => $data['hdmf_number'],
             'phic_number'      => $data['phic_number'],
             'pagibig_number'   => $data['pagibig_number'],
-            'date_regularized' => ($data['date_regularized'] == '') ? NULL : date('Y-m-d', strtotime($data['date_regularized'])),
+            'date_regularized' => ($data['date_regularized'] == '') ? NULL : date('Y-m-d H:i:s', strtotime($data['date_regularized'])),
             'department'       => $data['department'],
             'previous_branch'  => $data['previous_branch'],
             'daily_rate'       => $data['daily_rate'],
             'hourly_rate'      => $data['hourly_rate'],
             'status'           => 'active',
-            'created_at'       => date(now()),
+            'created_at'       => date('Y-m-d H:i:s'),
             'created_by'       => Auth::user()->id
         ]);
 
@@ -74,13 +74,13 @@ class EmployeeRepository implements EmployeeInterface
         $this->employee->where('id', $id)->update([
             'branch'           => $data['branch'],
             'company'          => $data['company'],
-            'date_hire'        => ($data['date_hired'] == '') ? NULL : date('Y-m-d', strtotime($data['date_hired'])),
+            'date_hire'        => ($data['date_hired'] == '') ? NULL : date('Y-m-d H:i:s', strtotime($data['date_hired'])),
             'full_name'        => ucwords($data['first_name'].'&nbsp;'.$data['middle_name'].'&nbsp;'.$data['last_name']),
             'first_name'       => ucfirst($data['first_name']),
             'middle_name'      => ucfirst($data['middle_name']),
             'last_name'        => ucfirst($data['last_name']),
             'age'              => $data['age'],
-            'birth_date'       => date('Y-m-d', strtotime($data['birth_date'])),
+            'birth_date'       => date('Y-m-d H:i:s', strtotime($data['birth_date'])),
             'gender'           => $data['gender'],
             'marital_status'   => $data['marital_status'],
             'address'          => $data['address'],
@@ -93,14 +93,14 @@ class EmployeeRepository implements EmployeeInterface
             'hdmf_number'      => $data['hdmf_number'],
             'phic_number'      => $data['phic_number'],
             'pagibig_number'   => $data['pagibig_number'],
-            'date_regularized' => ($data['date_regularized'] == '') ? NULL : date('Y-m-d', strtotime($data['date_regularized'])),
+            'date_regularized' => ($data['date_regularized'] == '') ? NULL : date('Y-m-d H:i:s', strtotime($data['date_regularized'])),
             'department'       => $data['department'],
             'previous_branch'  => $data['previous_branch'],
             'daily_rate'       => $data['daily_rate'],
             'hourly_rate'      => $data['hourly_rate'],
             'status'           => 'active',
             'updated_by'       => Auth::user()->id,
-            'updated_at'       => date(now()),
+            'updated_at'       => date('Y-m-d H:i:s'),
         ]);
 
         return $this->show($id);

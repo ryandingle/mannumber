@@ -18,7 +18,7 @@ class PermissionRepository implements PermissionInterface
         $this->user_permission  = $user_permission;
     }
 
-    public function list()
+    public function all()
     {
         if(Auth::user()->username !== 'super-admin')
             return $this->permission->where('prefix', '!=', 'delete')->get();
@@ -36,7 +36,7 @@ class PermissionRepository implements PermissionInterface
             'title'             => $data['title'],
             'prefix'            => $data['prefix'],
             'description'       => $data['description'],
-            'created_at'        => date(now()),
+            'created_at'        => date('Y-m-d H:i:s'),
             'created_by'        => Auth::user()->id
         ]);
 
@@ -55,7 +55,7 @@ class PermissionRepository implements PermissionInterface
             'prefix'            => $data['prefix'],
             'description'       => $data['description'],
             'updated_by'        => Auth::user()->id,
-            'updated_at'        => date(now()),
+            'updated_at'        => date('Y-m-d H:i:s'),
         ]);
 
         return $this->show($id);

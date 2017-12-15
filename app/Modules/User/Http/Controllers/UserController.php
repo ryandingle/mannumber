@@ -51,9 +51,9 @@ class UserController extends Controller
             'method'        => 'store',
             'module'        => request('module'),
             'id'            => request('id'),
-            'roles'         => $this->role->list(),
-            'modules'       => $this->module->list(),
-            'permissions'   => $this->permission->list()
+            'roles'         => $this->role->all(),
+            'modules'       => $this->module->all(),
+            'permissions'   => $this->permission->all()
         ];
         return view('user::modal.create', $data);
     }
@@ -110,7 +110,7 @@ class UserController extends Controller
                     'user_id'       => $data['id'],
                     'status'        => 'active',
                     'created_by'    => Auth::user()->id,
-                    'created_at'    => date(now())
+                    'created_at'    => date('Y-m-d H:i:s')
                 ];
             }
 
@@ -121,7 +121,7 @@ class UserController extends Controller
                     'user_id'       => $data['id'],
                     'status'        => 'active',
                     'created_by'    => Auth::user()->id,
-                    'created_at'    => date(now())
+                    'created_at'    => date('Y-m-d H:i:s')
                 ]; 
             }
 
@@ -130,7 +130,7 @@ class UserController extends Controller
                 'user_id'       => $data['id'],
                 'status'        => 'active',
                 'created_by'    => Auth::user()->id,
-                'created_at'    => date(now())
+                'created_at'    => date('Y-m-d H:i:s')
             ];
 
             $this->role->storeUserRoles($user_roles);
@@ -182,9 +182,9 @@ class UserController extends Controller
             'method'            => ''.$id.'/update',
             'module'            => request('module'),
             'id'                => request('id'),
-            'roles'             => $this->role->list(),
-            'modules'           => $this->module->list(),
-            'permissions'       => $this->permission->list(),
+            'roles'             => $this->role->all(),
+            'modules'           => $this->module->all(),
+            'permissions'       => $this->permission->all(),
             'user_roles'        => $this->role->showUserRoles($id),
             'user_permissions'  => $this->permission->showUserPermissions($id),
             'user_modules'      => $this->module->showUserModules($id),
@@ -262,7 +262,7 @@ class UserController extends Controller
                     'user_id'       => $data['id'],
                     'status'        => 'active',
                     'created_by'    => Auth::user()->id,
-                    'created_at'    => date(now())
+                    'created_at'    => date('Y-m-d H:i:s')
                 ];
             }
 
@@ -273,7 +273,7 @@ class UserController extends Controller
                     'user_id'       => $data['id'],
                     'status'        => 'active',
                     'created_by'    => Auth::user()->id,
-                    'created_at'    => date(now())
+                    'created_at'    => date('Y-m-d H:i:s')
                 ]; 
             }
 
@@ -282,7 +282,7 @@ class UserController extends Controller
                 'user_id'       => $data['id'],
                 'status'        => 'active',
                 'created_by'    => Auth::user()->id,
-                'created_at'    => date(now())
+                'created_at'    => date('Y-m-d H:i:s')
             ];
 
             $this->role->updateUserRoles($id, $user_roles);

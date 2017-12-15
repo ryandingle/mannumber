@@ -72,17 +72,17 @@
                         <label>Gender</label>
                         <select name="gender" class="form-control select2">
                             <option value=""> Select Gender </option>
-                            <option <?php echo ($data->gender == 'male') ? 'selected="selected"' : '';?> value="male">Male</option>
-                            <option <?php echo ($data->gender == 'female') ? 'selected="selected"' : '';?> value="female">Female</option>
+                            <option {{(trim($data->gender) == 'male') ? 'selected="selected"' : ''}} value="male">Male</option>
+                            <option {{(trim($data->gender) == 'female') ? 'selected="selected"' : ''}} value="female">Female</option>
                         </select>
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Marital Status</label>
                         <select name="marital_status" class="form-control select2">
                             <option value=""> Select Status </option>
-                            <option <?php echo ($data->marital_status == 'single') ? 'selected="selected"' : '';?> value="single">Single</option>
-                            <option <?php echo ($data->marital_status == 'married') ? 'selected="selected"' : '';?> value="married">Married</option>
-                            <option <?php echo ($data->marital_status == 'others') ? 'selected="selected"' : '';?> value="others">Others</option>
+                            <option {{(trim($data->marital_status) == 'single') ? 'selected="selected"' : ''}} value="single">Single</option>
+                            <option {{(trim($data->marital_status) == 'married') ? 'selected="selected"' : ''}} value="married">Married</option>
+                            <option {{(trim($data->marital_status) == 'others') ? 'selected="selected"' : ''}} value="others">Others</option>
                         </select>
                     </div>
                     <div class="form-group col-md-12">

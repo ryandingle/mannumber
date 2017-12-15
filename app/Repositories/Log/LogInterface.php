@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Repositories\Log;
-use Illuminate\Http\Request;
 
 interface LogInterface {
     public function store($data);

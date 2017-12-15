@@ -3,7 +3,7 @@
 namespace App\Repositories\Role;
 
 interface RoleInterface {
-    public function list();
+    public function all();
     public function get($where, $rows);
     public function store($data);
     public function edit($id);

@@ -3,7 +3,7 @@
 namespace App\Repositories\Permission;
 
 interface PermissionInterface {
-    public function list();
+    public function all();
     public function get($where, $rows);
     public function store($data);
     public function edit($id);

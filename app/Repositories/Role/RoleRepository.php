@@ -10,6 +10,7 @@ use Auth, DB;
 class RoleRepository implements RoleInterface
 {
     private $role;
+    private $user_role;
 
     public function __construct(Role $role, User_role $user_role)
     {
@@ -17,7 +18,7 @@ class RoleRepository implements RoleInterface
         $this->user_role    = $user_role;
     }
 
-    public function list()
+    public function all()
     {
         if(Auth::user()->username !== 'super-admin')
             return $this->role->where('prefix', '!=', 'super-admin')->get();
@@ -35,7 +36,7 @@ class RoleRepository implements RoleInterface
             'title'             => $data['title'],
             'prefix'            => $data['prefix'],
             'description'       => $data['description'],
-            'created_at'        => date(now()),
+            'created_at'        => date('Y-m-d H:i:s'),
             'created_by'        => Auth::user()->id
         ]);
 
@@ -54,7 +55,7 @@ class RoleRepository implements RoleInterface
             'prefix'            => $data['prefix'],
             'description'       => $data['description'],
             'updated_by'       => Auth::user()->id,
-            'updated_at'       => date(now()),
+            'updated_at'       => date('Y-m-d H:i:s'),
         ]);
 
         return $this->show($id);

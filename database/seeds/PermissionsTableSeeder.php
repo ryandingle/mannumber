@@ -16,7 +16,7 @@ class PermissionsTableSeeder extends Seeder
             'prefix' 		=> 'create',
             'description' 	=> 'Create Permission',
             'created_by' 	=> '1',
-            'created_at' 	=> date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('permissions')->insert([
@@ -24,7 +24,7 @@ class PermissionsTableSeeder extends Seeder
             'prefix'        => 'read',
             'description'   => 'Read Permission',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('permissions')->insert([
@@ -32,7 +32,7 @@ class PermissionsTableSeeder extends Seeder
             'prefix'        => 'update',
             'description'   => 'Update Permission',
             'created_by'    => '2',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('permissions')->insert([
@@ -40,7 +40,7 @@ class PermissionsTableSeeder extends Seeder
             'prefix'        => 'delete',
             'description'   => 'Delete Permission',
             'created_by'    => '2',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
     }
 }

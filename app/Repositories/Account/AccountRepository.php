@@ -15,7 +15,7 @@ class AccountRepository implements AccountInterface
         $this->account = $account;
     }
 
-    public function list()
+    public function all()
     {
         return $this->account->all();
     }
@@ -48,7 +48,7 @@ class AccountRepository implements AccountInterface
             'sss_no'           => $data['sss_no'],
             'password'         => bcrypt($data['password']),
             'updated_by'       => Auth::user()->id,
-            'updated_at'       => date(now()),
+            'updated_at'       => date('Y-m-d H:i:s'),
         ];
 
         if($data['password'] == '' && $data['password_confirmation'] == '')

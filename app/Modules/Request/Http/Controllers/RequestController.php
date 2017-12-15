@@ -5,7 +5,7 @@ namespace App\Modules\Request\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\DataTables\Request\RequestsDatatable;
+use App\DataTables\Request\RequestsDataTable;
 use App\Http\Controllers\Controller;
 use App\Repositories\Request\RequestInterface;
 use App\Repositories\Request\EmployeeInterface;

@@ -15,7 +15,7 @@ class UserRepository implements UserInterface
         $this->user = $user;
     }
 
-    public function list()
+    public function all()
     {
         return $this->user->all();
     }
@@ -38,7 +38,7 @@ class UserRepository implements UserInterface
             'sss_no'                    => $data['sss_no'],
             'password'                  => bcrypt($data['password']),
             'status'                    => $data['status'],
-            'created_at'                => date(now()),
+            'created_at'                => date('Y-m-d H:i:s'),
             'created_by'                => Auth::user()->id
         ]);
 
@@ -64,7 +64,7 @@ class UserRepository implements UserInterface
             'password'         => bcrypt($data['password']),
             'status'           => $data['status'],
             'updated_by'       => Auth::user()->id,
-            'updated_at'       => date(now()),
+            'updated_at'       => date('Y-m-d H:i:s'),
         ];
 
         if($data['password'] == '' && $data['password_confirmation'] == '')

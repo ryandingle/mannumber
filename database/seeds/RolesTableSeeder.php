@@ -16,7 +16,7 @@ class RolesTableSeeder extends Seeder
             'prefix' 		=> 'super-admin',
             'description' 	=> 'Super Admin Role',
             'created_by' 	=> '1',
-            'created_at' 	=> date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('roles')->insert([
@@ -24,7 +24,7 @@ class RolesTableSeeder extends Seeder
             'prefix'        => 'admin',
             'description'   => 'Admin Role',
             'created_by'    => '1',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
 
         DB::table('roles')->insert([
@@ -32,7 +32,7 @@ class RolesTableSeeder extends Seeder
             'prefix'        => 'encoder',
             'description'   => 'Encoder Role',
             'created_by'    => '2',
-            'created_at'    => date(now()),
+            'created_at' 	=> date('Y-m-d H:i:s'),
         ]);
     }
 }

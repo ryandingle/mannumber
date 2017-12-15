@@ -18,7 +18,7 @@ class ModuleRepository implements ModuleInterface
         $this->user_module  = $user_module;
     }
 
-    public function list()
+    public function all()
     {
         return $this->module
             //->where('prefix', '!=', 'dashboard')
@@ -40,7 +40,7 @@ class ModuleRepository implements ModuleInterface
             'icon'              => $data['icon'],
             'sort_order'        => $this->countList() + 1,
             'status'            => $data['status'],
-            'created_at'        => date(now()),
+            'created_at'        => date('Y-m-d H:i:s'),
             'created_by'        => Auth::user()->id
         ]);
 
@@ -62,7 +62,7 @@ class ModuleRepository implements ModuleInterface
             'sort_order'        => ($data['sort_order'] == 0 || $data['sort_order'] == '' || $data['sort_order'] == null) ? $this->get(['id' => $id], ['sort_order'])[0]['sort_order'] : $data['sort_order'] ,
             'status'            => $data['status'],
             'updated_by'        => Auth::user()->id,
-            'updated_at'        => date(now()),
+            'updated_at'        => date('Y-m-d H:i:s'),
         ]);
 
         return $this->show($id);

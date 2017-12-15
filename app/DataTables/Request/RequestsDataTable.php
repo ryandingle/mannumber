@@ -53,8 +53,8 @@ class RequestsDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '12%'])
-                    ->parameters($this->getBuilderParameters());
+                    ->addAction(['width' => '12%']);
+                    //->parameters($this->getBuilderParameters());
     }
 
     /**

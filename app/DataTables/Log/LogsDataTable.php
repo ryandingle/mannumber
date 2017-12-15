@@ -52,8 +52,8 @@ class LogsDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '80px'])
-                    ->parameters($this->getBuilderParameters());
+                    ->addAction(['width' => '80px']);
+                    //->parameters($this->getBuilderParameters());
     }
 
     /**
