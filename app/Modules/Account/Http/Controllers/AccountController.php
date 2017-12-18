@@ -116,7 +116,7 @@ class AccountController extends Controller
             'lastname'                  => 'required',
             'username'                  => 'required'.$unique_username.'',
             'email'                     => 'required|email'.$unique_email.'',
-            'employee_no'               => 'required'.$unique_employee_no.'',
+            'employee_no'               => 'nullable'.$unique_employee_no.'',
             'sss_no'                    => 'nullable'.$unique_sss_no.'',
             'password'                  => 'confirmed|min:6'.$password_require.'',
             'password_confirmation'     => ''.$password_require.'',
