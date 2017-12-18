@@ -38,7 +38,7 @@ class AccountRepository implements AccountInterface
     public function update($id, $data)
     {
         $user_data = [
-            'name'             => $data['firstname'].' '.$data['middlename'].' '.$data['lastname'],
+            'name'             => $data['firstname'].'&nbsp;'.$data['middlename'].'&nbsp;'.$data['lastname'],
             'firstname'        => $data['firstname'],
             'middlename'       => $data['middlename'],
             'lastname'         => $data['lastname'],

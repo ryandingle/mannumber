@@ -6,7 +6,7 @@
                 &nbsp;
             </div>
             <div class="pull-left info">
-                <p class="name">{{ Auth::user()->name }}</p>
+                <p class="name">{{ Auth::user()->username }}</p>
             </div>
         </div>
         <ul class="sidebar-menu" data-widget="tree">

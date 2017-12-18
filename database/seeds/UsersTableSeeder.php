@@ -17,8 +17,6 @@ class UsersTableSeeder extends Seeder
             'lastname'      => 'Admin',
             'email'         => 'superadmin@gmail.com',
             'username'      => 'super-admin',
-            'employee_no'   => '000000000',
-            'sss_no'        => '000000000',
             'status'        => 'active',
             'password'      => bcrypt('password'),
         ]);
@@ -29,8 +27,6 @@ class UsersTableSeeder extends Seeder
             'lastname'      => 'Admin',
             'email'         => 'admin@gmail.com',
             'username'      => 'admin',
-            'employee_no'   => '000000001',
-            'sss_no'        => '000000001',
             'status'        => 'active',
             'password'      => bcrypt('password'),
         ]);
@@ -41,8 +37,6 @@ class UsersTableSeeder extends Seeder
             'lastname'      => 'Encoder',
             'email'         => 'encoder@gmail.com',
             'username'      => 'encoder',
-            'employee_no'   => '000000002',
-            'sss_no'        => '000000003',
             'status'        => 'active',
             'password'      => bcrypt('password'),
         ]);

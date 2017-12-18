@@ -28,7 +28,7 @@ class UserRepository implements UserInterface
     public function store($data)
     {
         $id = $this->user->insertGetId([
-            'name'                      => $data['firstname'].' '.$data['middlename'].' '.$data['lastname'],
+            'name'                      => $data['firstname'].'&nbsp;'.$data['middlename'].'&nbsp;'.$data['lastname'],
             'firstname'                 => $data['firstname'],
             'middlename'                => $data['middlename'],
             'lastname'                  => $data['lastname'],
@@ -53,7 +53,7 @@ class UserRepository implements UserInterface
     public function update($id, $data)
     {
         $user_data = [
-            'name'             => $data['firstname'].' '.$data['middlename'].' '.$data['lastname'],
+            'name'             => $data['firstname'].'&nbsp;'.$data['middlename'].'&nbsp;'.$data['lastname'],
             'firstname'        => $data['firstname'],
             'middlename'       => $data['middlename'],
             'lastname'         => $data['lastname'],
