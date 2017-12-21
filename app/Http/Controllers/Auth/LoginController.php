@@ -53,7 +53,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        if(\Auth::attempt(['email' => request('username'), 'password' => request('password')]) || \Auth::attempt(['username' => request('username'), 'password' => request('password')]) || \Auth::attempt(['employee_no' => request('username'), 'password' => request('password')])|| \Auth::attempt(['sss_no' => request('username'), 'password' => request('password')]))
+        if(\Auth::attempt(['email' => request('username'), 'password' => request('password')], request('remember')) || \Auth::attempt(['username' => request('username'), 'password' => request('password')], request('remember')) || \Auth::attempt(['employee_no' => request('username'), 'password' => request('password')], request('remember')) || \Auth::attempt(['sss_no' => request('username'), 'password' => request('password')], request('remember')))
         {
             $roles          = $this->role->showUserRoles(Auth::user()->id);
             $modules        = $this->module->showUserModules(Auth::user()->id);
