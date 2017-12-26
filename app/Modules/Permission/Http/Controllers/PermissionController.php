@@ -10,6 +10,7 @@ use App\DataTables\Permission\PermissionsDataTable;
 use App\Repositories\Permission\PermissionInterface;
 use App\Repositories\User\UserInterface;
 use App\Repositories\Log\LogInterface;
+use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
 {
@@ -56,11 +57,16 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'title'         => 'required',
             'prefix'        => 'required',
             'description'   => 'nullable',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('title')
+            ], 422);
 
         $data  = $this->permission->store($request->all());
 
@@ -130,11 +136,16 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'title'         => 'required',
             'prefix'        => 'required',
             'description'   => 'nullable',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('title')
+            ], 422);
 
         $old_data   = $this->permission->show($id);
         $data       = $this->permission->update($id, $request->all());

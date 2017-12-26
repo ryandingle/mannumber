@@ -11,6 +11,7 @@ use App\Repositories\Request\EmployeeInterface;
 use App\Repositories\Request\RequestInterface;
 use App\Repositories\User\UserInterface;
 use App\Repositories\Log\LogInterface;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -72,7 +73,7 @@ class EmployeeController extends Controller
             ], 422);
         }
 
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'company'           => 'required',
             'date_hired'        => 'nullable|date',
             'first_name'        => 'required',
@@ -98,6 +99,11 @@ class EmployeeController extends Controller
             'daily_rate'        => 'nullable|numeric',
             'hourly_rate'       => 'nullable|numeric',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('company')
+            ], 422);
 
         $data = $this->employee->store($id, $request->all());
 
@@ -166,7 +172,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'company'           => 'required',
             'date_hired'        => 'nullable|date',
             'first_name'        => 'required',
@@ -192,6 +198,11 @@ class EmployeeController extends Controller
             'daily_rate'        => 'nullable|numeric',
             'hourly_rate'       => 'nullable|numeric',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('company')
+            ], 422);
 
         $old_data   = $this->employee->show($id);
         $data       = $this->employee->update($id, $request->all());

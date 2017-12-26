@@ -10,13 +10,15 @@
             </div>
         </div>
         <ul class="sidebar-menu" data-widget="tree">
-            @foreach(session('modules') as $module)
-            <li class="{{ (Route::currentRoutename() == $module->prefix) ? 'active' : ''}}">
-                <a href="{{ route($module->prefix) }}">
-                    <i class="fa {{ $module->icon }}"></i> <span>{{ $module->title }}</span>
-                </a>
-            </li>
-            @endforeach
+            @if(session('modules'))
+                @foreach(session('modules') as $module)
+                <li class="{{ (Route::currentRoutename() == $module->prefix) ? 'active' : ''}}">
+                    <a href="{{ route($module->prefix) }}">
+                        <i class="fa {{ $module->icon }}"></i> <span>{{ $module->title }}</span>
+                    </a>
+                </li>
+                @endforeach
+            @endif
         </ul>
     </section>
 </aside>

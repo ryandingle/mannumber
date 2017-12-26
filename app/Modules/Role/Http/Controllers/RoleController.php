@@ -10,6 +10,7 @@ use App\DataTables\Role\RolesDataTable;
 use App\Repositories\Role\RoleInterface;
 use App\Repositories\User\UserInterface;
 use App\Repositories\Log\LogInterface;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -56,11 +57,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'title'         => 'required',
             'prefix'        => 'required',
             'description'   => 'nullable',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('title')
+            ], 422);
 
         $data  = $this->role->store($request->all());
 
@@ -130,11 +136,16 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'title'         => 'required',
             'prefix'        => 'required',
             'description'   => 'nullable',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('title')
+            ], 422);
 
         $old_data   = $this->role->show($id);
         $data       = $this->role->update($id, $request->all());

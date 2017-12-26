@@ -10,6 +10,7 @@ use App\DataTables\Module\ModulesDataTable;
 use App\Repositories\Module\ModuleInterface;
 use App\Repositories\User\UserInterface;
 use App\Repositories\Log\LogInterface;
+use Illuminate\Support\Facades\Validator;
 
 class ModuleController extends Controller
 {
@@ -56,13 +57,18 @@ class ModuleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'title'         => 'required',
             'description'   => 'nullable',
             'prefix'        => 'required',
             'icon'          => 'nullable',
             'status'        => 'required',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('title')
+            ], 422);
 
         $data  = $this->module->store($request->all());
 
@@ -132,7 +138,7 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'title'         => 'required',
             'description'   => 'nullable',
             'prefix'        => 'required',
@@ -140,6 +146,12 @@ class ModuleController extends Controller
             'sort_order'    => 'nullable',
             'status'        => 'required',
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('title')
+            ], 422);
+
 
         $old_data   = $this->module->show($id);
         $data       = $this->module->update($id, $request->all());

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Repositories\Log\LogInterface;
 use App\Repositories\User\UserInterface;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
@@ -97,20 +98,20 @@ class AccountController extends Controller
     {
         $unique_username    = '|unique:users';
         $unique_email       = '|unique:users';
-        $unique_employee_no = '|unique:users';
+        $unique_employee_no = '|unique:users';      
         $unique_sss_no      = '|unique:users';
         $password_require   = '|required';
         
         $user_check = $this->account->show($id);
 
-        if($user_check['username']      == $request->username) $unique_username = '';
-        if($user_check['email']         == $request->email) $unique_email = '';
-        if($user_check['employee_no']   == $request->employee_no) $unique_employee_no = '';
-        if($user_check['sss_no']        == $request->sss_no) $unique_sss_no = '';
+        if($user_check['username']      == $request->input('username')) $unique_username = '';
+        if($user_check['email']         == $request->input('email')) $unique_email = '';
+        if($user_check['employee_no']   == $request->input('employee_no')) $unique_employee_no = '';
+        if($user_check['sss_no']        == $request->input('sss_no')) $unique_sss_no = '';
 
-        if($request->password == '' && $request->password_confirmation == '') $password_require = '|nullable';
+        if($request->input('password') == '' && $request->input('password_confirmation') == '') $password_require = '|nullable';
 
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'firstname'                 => 'required',
             'middlename'                => 'nullable',
             'lastname'                  => 'required',
@@ -122,9 +123,19 @@ class AccountController extends Controller
             'password_confirmation'     => ''.$password_require.'',
         ]);
 
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('firstname')
+            ], 422);
+
         if($request->hasFile('image'))
         {
-            $request->validate(['image' => 'image|mimes:png,jpg,jpeg,svg,gif']);
+            $validator = Validator::make($request->all(),['image' => 'image|mimes:png,jpg,jpeg,svg,gif']);
+
+            if($validator->fails()) return response()->json([
+                    'message'   => 'Given data was invalid.',
+                    'errors'    => $validator->errors('image')
+                ], 422);
 
             $old_image = $this->account->show($id)->image;
 
@@ -157,6 +168,7 @@ class AccountController extends Controller
             'ip_address'    => $request->ip(),
             'user_agent'    => $request->server('HTTP_USER_AGENT')
         ];
+
         $this->log->store($log_data);
         /*END LOG ACTION*/
 

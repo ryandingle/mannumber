@@ -12,6 +12,7 @@ use App\Repositories\User\UserInterface;
 use App\Repositories\Module\ModuleInterface;
 use App\Repositories\Permission\PermissionInterface;
 use App\Repositories\Log\LogInterface;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class UserController extends Controller
@@ -66,7 +67,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'firstname'                 => 'required',
             'middlename'                => 'nullable',
             'lastname'                  => 'required',
@@ -81,6 +82,11 @@ class UserController extends Controller
             'permissions'               => 'required',
             'status'                    => 'required',
         ]);
+
+        if($validator->fails()) return response()->json([
+            'message'   => 'Given data was invalid.',
+            'errors'    => $validator->errors('firstname')
+        ], 422);
 
         $data  = $this->user->store($request->all());
 
@@ -210,14 +216,14 @@ class UserController extends Controller
         
         $user_check = $this->user->show($id);
 
-        if($user_check['username']      == $request->username) $unique_username = '';
-        if($user_check['email']         == $request->email) $unique_email = '';
-        if($user_check['employee_no']   == $request->employee_no) $unique_employee_no = '';
-        if($user_check['sss_no']        == $request->sss_no) $unique_sss_no = '';
+        if($user_check['username']      == $request->input('username')) $unique_username = '';
+        if($user_check['email']         == $request->input('email')) $unique_email = '';
+        if($user_check['employee_no']   == $request->input('employee_no')) $unique_employee_no = '';
+        if($user_check['sss_no']        == $request->input('sss_no')) $unique_sss_no = '';
 
         if($request->password == '' && $request->password_confirmation == '') $password_require = '|nullable';
 
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'firstname'                 => 'required',
             'middlename'                => 'nullable',
             'lastname'                  => 'required',
@@ -232,6 +238,11 @@ class UserController extends Controller
             'permissions'               => 'required',
             'status'                    => 'required',
         ]);
+
+        if($validator->fails()) return response()->json([
+            'message'   => 'Given data was invalid.',
+            'errors'    => $validator->errors('firstname')
+        ], 422);
 
         $old_data   = $this->user->show($id);
         $data       = $this->user->update($id, $request->all());

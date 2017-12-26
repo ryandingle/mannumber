@@ -52,12 +52,12 @@
                             <input type="text" name="sss_no" placeholder="SSS Number" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" placeholder="Password" class="form-control">
+                            <label>Password (default: password)</label>
+                            <input type="password" name="password" value="password" placeholder="Password" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Repeat Password</label>
-                            <input type="password" name="password_confirmation" placeholder="Repeat password" class="form-control">
+                            <input type="password" name="password_confirmation" value="password" placeholder="Repeat password" class="form-control">
                         </div>
                     </div>
                 </div>

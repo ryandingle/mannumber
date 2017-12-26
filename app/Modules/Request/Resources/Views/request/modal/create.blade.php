@@ -12,12 +12,12 @@
             <input type="text" name="request_number" placeholder="Request Number" class="form-control">
         </div>
         <div class="form-group">
-            <label>Company</label>
-            <input type="text" name="company" placeholder="Company" class="form-control">
+            <label>Company Code</label>
+            <input type="text" name="company" placeholder="Company Code" class="form-control">
         </div>
         <div class="form-group">
-            <label>Branch</label>
-            <input type="text" name="branch" placeholder="Branch" class="form-control">
+            <label>Branch Code</label>
+            <input type="text" name="branch" placeholder="Branch Code" class="form-control">
         </div>
     </div>
     <div class="modal-footer">

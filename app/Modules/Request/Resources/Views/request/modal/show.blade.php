@@ -14,11 +14,11 @@
     		<td class="text-left"><b>{{ $data->request_number }}</b></td>
     	</tr>
         <tr>
-            <td width="30%">Company</td>
+            <td width="30%">Company Code</td>
             <td class="text-left"><b>{{ $data->company }}</b></td>
         </tr>
         <tr>
-            <td width="30%">Branch</td>
+            <td width="30%">Branch Code</td>
             <td class="text-left"><b>{{ $data->branch }}</b></td>
         </tr>
         <tr>

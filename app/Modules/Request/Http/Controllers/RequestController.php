@@ -11,6 +11,7 @@ use App\Repositories\Request\RequestInterface;
 use App\Repositories\Request\EmployeeInterface;
 use App\Repositories\User\UserInterface;
 use App\Repositories\Log\LogInterface;
+use Illuminate\Support\Facades\Validator;
 
 class RequestController extends Controller
 {
@@ -59,11 +60,16 @@ class RequestController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'request_number'  => 'required|numeric|min:1',
             'company'         => 'required',
             'branch'          => 'required'
         ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('request_number')
+            ], 422);
 
         $data  = $this->requestRepository->store($request->all());
 
@@ -166,7 +172,7 @@ class RequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request_number     = $request->request_number;
+        $request_number     = $request->input('request_number');
         $employee_count     = $this->employee->count(['request_id' => $id]);
 
         if($request_number < $employee_count)
@@ -174,11 +180,16 @@ class RequestController extends Controller
             return response()->json(['message' => 'Lower number to its original request value cannot be processed.'], 422);
         }
 
-       $request->validate([
-            'request_number'    => 'required|numeric|min:1',
-            'company'           => 'required',
-            'branch'            => 'required'
-       ]);
+        $validator = Validator::make($request->all(),[
+            'request_number'  => 'required|numeric|min:1',
+            'company'         => 'required',
+            'branch'          => 'required'
+        ]);
+
+        if($validator->fails()) return response()->json([
+                'message'   => 'Given data was invalid.',
+                'errors'    => $validator->errors('request_number')
+            ], 422);
 
        $old_data    = $this->requestRepository->show($id);
        $data        = $this->requestRepository->update($id, $request->all());

@@ -12,11 +12,11 @@
             <input type="text" name="request_number" placeholder="Request Number" value="{{ $data->request_number }}" class="form-control">
         </div>
         <div class="form-group">
-            <label>Company</label>
+            <label>Company Code</label>
             <input type="text" name="company" placeholder="Company" value="{{ $data->company }}" class="form-control">
         </div>
         <div class="form-group">
-            <label>Branch</label>
+            <label>Branch Code</label>
             <input type="text" name="branch" placeholder="Branch" value="{{ $data->branch }}" class="form-control">
         </div>
     </div>
