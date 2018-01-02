@@ -42,13 +42,16 @@ class checkModuleAccess
         }
         else
         {
-            $roles          = $this->role->showUserRoles(Auth::user()->id);
-            $modules        = $this->module->showUserModules(Auth::user()->id);
-            $permissions    = $this->permission->showUserPermissions(Auth::user()->id);
+            if(Auth::user())
+            {
+                $roles          = $this->role->showUserRoles(Auth::user()->id);
+                $modules        = $this->module->showUserModules(Auth::user()->id);
+                $permissions    = $this->permission->showUserPermissions(Auth::user()->id);
 
-            $request->session()->put('role', $roles);
-            $request->session()->put('modules', $modules);
-            $request->session()->put('permissions', $permissions);
+                $request->session()->put('role', $roles);
+                $request->session()->put('modules', $modules);
+                $request->session()->put('permissions', $permissions);
+            }
         }
 
         return $next($request);

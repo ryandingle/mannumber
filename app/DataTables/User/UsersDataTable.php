@@ -2,9 +2,10 @@
 
 namespace App\DataTables\User;
 
-use App\User;
+//use App\User;
 use Yajra\DataTables\Services\DataTable;
 use Auth;
+use DB;
 
 class UsersDataTable extends DataTable
 {
@@ -17,6 +18,9 @@ class UsersDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
+            ->filterColumn('role', function($query, $keyword) {
+                $query->whereRaw("CONCAT(roles.title) like ?", ["%{$keyword}%"]);
+            })
             ->addColumn('action', function($data){
                 return view('user::button.user', ['data' => $data->id]);
             });
@@ -28,30 +32,38 @@ class UsersDataTable extends DataTable
      * @param \App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model)
+    public function query(/*User $model*/)
     {
         if(Auth::user()->username !== 'super-admin'):
-            return $model->newQuery()->select(
-                'id', 
-                'name',
-                'email',
-                'username',
-                'employee_no',
-                'sss_no',
-                'created_at', 
-                'updated_at'
-            )->where('username', '!=', 'super-admin');
+            return DB::table('users')
+                ->join('user_roles', 'user_roles.user_id' ,'=', 'users.id')
+                ->join('roles', 'roles.id' ,'=', 'user_roles.role_id')
+                ->select(
+                    'users.id', 
+                    'users.name',
+                    'users.email',
+                    'users.username',
+                    'users.employee_no',
+                    'users.sss_no',
+                    'users.created_at', 
+                    'users.updated_at',
+                    'roles.title as role'
+                )->where('users.username', '!=', 'super-admin');
         else:
-            return $model->newQuery()->select(
-                'id', 
-                'name',
-                'email',
-                'username',
-                'employee_no',
-                'sss_no',
-                'created_at', 
-                'updated_at'
-            );
+            return DB::table('users')
+                ->join('user_roles', 'user_roles.user_id' ,'=', 'users.id')
+                ->join('roles', 'roles.id' ,'=', 'user_roles.role_id')
+                ->select(
+                    'users.id', 
+                    'users.name',
+                    'users.email',
+                    'users.username',
+                    'users.employee_no',
+                    'users.sss_no',
+                    'users.created_at', 
+                    'users.updated_at',
+                    'roles.title as role'
+                );
         endif;
     }
 
@@ -79,6 +91,7 @@ class UsersDataTable extends DataTable
         return [
             'id', 
             'name',
+            'role',
             'email',
             'username',
             'employee_no',
