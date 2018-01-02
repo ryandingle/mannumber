@@ -19,7 +19,11 @@ class UsersDataTable extends DataTable
     {
         return datatables($query)
             ->filterColumn('role', function($query, $keyword) {
-                $query->whereRaw("CONCAT(roles.title) like ?", ["%{$keyword}%"]);
+                //for mysql server
+                $query->whereRaw("LOWER(roles.title) like ?", ["%{$keyword}%"]);
+                
+                //for sql server
+                //$query->whereRaw("LOWER([roles].[title]) like ?", ["%{$keyword}%"]);
             })
             ->addColumn('action', function($data){
                 return view('user::button.user', ['data' => $data->id]);
