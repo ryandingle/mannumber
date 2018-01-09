@@ -48,7 +48,9 @@
             </div>
         </div>
     </form>
+    @if(env('MAIL_ACTIVATE') == 1)
     <a class="btn btn-link" href="{{ route('password.request') }}">Forgot Your Password?</a>
+    @endif
     <br>
     </div>
 </div>
